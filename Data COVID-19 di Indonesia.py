@@ -1,22 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
-
-
 import requests
 import pandas as pd
 import json
 
 
-# In[3]:
-
-
 bersatulawancovid = ['Cuci Tangan', 'Pakai Masker', 'Jaga jarak']
 print(bersatulawancovid)
-
-
-# In[5]:
 
 
 #Mengakses Api Covid-19.go.id
@@ -25,14 +16,8 @@ resp = requests.get('https://data.covid19.go.id/public/api/prov_detail_JAWA_BARA
 print(resp)
 
 
-# In[7]:
-
-
 #Header API
 print(resp.headers)
-
-
-# In[13]:
 
 
 #Mengekstrak isi respon
@@ -40,11 +25,7 @@ cov_id_raw = resp.json()
 print(cov_id_raw)
 
 
-# In[5]:
-
-
 #Mengekstrak isi respon 2
-
 import requests
 resp = requests.get('https://data.covid19.go.id/public/api/update.json', verify=False)
 cov_id_raw = resp.json()
@@ -52,9 +33,6 @@ cov_id_raw = resp.json()
 print('Length of cov_id_raw : %d.' %len(cov_id_raw))
 print('Komponen cov_id_raw  : %s.' %cov_id_raw.keys())
 cov_id_update = cov_id_raw['update']
-
-
-# In[6]:
 
 
 #Analisa Data
@@ -70,9 +48,6 @@ print('Jumlah total kasus positif hingga saat ini :', cov_id_update['total']['ju
 print('Jumlah total kasus meninggal hingga saat ini:', cov_id_update['total']['jumlah_meninggal'])
 
 
-# In[15]:
-
-
 #Memahami kasus Covid-19 Jawa Barat
 resp_jabar = requests.get('https://data.covid19.go.id/public/api/prov_detail_JAWA_BARAT.json')
 cov_jabar_raw = resp_jabar.json()
@@ -83,11 +58,7 @@ print('Persentase kematian akibat COVID-19 di Jawa Barat         : %f.2%%' %cov_
 print('Persentase tingkat kesembuhan dari COVID-19 di Jawa Barat : %f.2%%' %cov_jabar_raw['sembuh_persen'])
 
 
-# In[17]:
-
-
 #Memperoleh informasi lebih lengkap
-
 import numpy as np
 import pandas as pd
 import requests
@@ -97,9 +68,6 @@ cov_jabar_raw = resp_jabar.json()
 cov_jabar = pd.DataFrame(cov_jabar_raw['list_perkembangan'])
 print('Info cov_jabar:\n', cov_jabar.info())
 print('\nLima data teratas cov_jabar:\n', cov_jabar.head())
-
-
-# In[32]:
 
 
 #Menjinakkan Data
@@ -124,11 +92,7 @@ cov_jabar_tidy['tanggal'] = pd.to_datetime(cov_jabar_tidy['tanggal']*1e6, unit='
 print("Data Lima Teratas:\n", cov_jabar_tidy.head())
 
 
-# In[33]:
-
-
 #Menunjukkan Melalui Gambar
-
 import numpy as np
 import pandas as pd
 import requests
@@ -152,11 +116,7 @@ ax.bar(data=cov_jabar_tidy, x='tanggal', height='kasus_baru')
 plt.show
 
 
-# In[36]:
-
-
 #Informasi pada Grafik
-
 import numpy as np
 import pandas as pd
 import requests
@@ -196,11 +156,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[35]:
-
-
 #Grafik untuk Kasus Sembuh
-
 import numpy as np
 import pandas as pd
 import requests
@@ -238,11 +194,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[38]:
-
-
 #Grafik untuk Kasus Meninggal
-
 import numpy as np
 import pandas as pd
 import requests
@@ -280,12 +232,8 @@ plt.tight_layout()
 plt.show()
 
 
-# In[8]:
-
-
 #Apakah Pekan ini Lebih Baik?
 #Lima data teratas Covid-19 di Jabar dalam pekanan
-
 import numpy as np
 import pandas as pd
 import requests
@@ -316,15 +264,11 @@ print(cov_jabar_pekanan.info())
 print('\nLima data teratas cov_jabar_pekanan:\n', cov_jabar_pekanan.head())
 
 
-# In[10]:
-
-
 #Membuat kolom baru yang berisi jumlah kasus baru dalam satu pekan sebelumnya. Kolom ini diberi nama jumlah_pekanlalu.
 #Mengganti nilai NaN pada kolom jumlah_pekanlalu dengan nilai 0
 #Melakukan komparasi antara kolom jumlah dengan kolom jumlah_pekanlalu. 
 #Hasil komparasi ini disimpan dalam kolom baru dengan nama lebih_baik, 
 #isinya adalah True apabila jumlah kasus baru pekan ini lebih rendah dibandingkan jumlah kasus pekan lalu
-
 import numpy as np
 import pandas as pd
 import requests
@@ -356,11 +300,7 @@ cov_jabar_pekanan['lebih_baik'] = cov_jabar_pekanan['jumlah'] < cov_jabar_pekana
 print('Sepuluh data teratas:\n', cov_jabar_pekanan.head(10))
 
 
-# In[2]:
-
-
 #Membuat Bar Chart
-
 import numpy as np
 import pandas as pd
 import requests
@@ -421,11 +361,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[3]:
-
-
 #Jumlah kasus aktif
-
 import numpy as np
 import pandas as pd
 import requests
@@ -448,11 +384,7 @@ cov_jabar_akumulasi['akumulasi_meninggal'] = cov_jabar_tidy['meninggal'].cumsum(
 print(cov_jabar_akumulasi.tail())
 
 
-# In[1]:
-
-
 #Membuat Line Chart Akumulasi aktif
-
 import numpy as np
 import pandas as pd
 import requests
@@ -496,11 +428,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[2]:
-
-
 #Menggali lebih dalam dinamika kasus covid-19 di Jabar
-
 import numpy as np
 import pandas as pd
 import requests
@@ -539,10 +467,3 @@ ax.text(1, -0.3, 'Sumber data: covid.19.go.id', color='blue',
 plt.grid()
 plt.tight_layout()
 plt.show()
-
-
-# In[ ]:
-
-
-
-
