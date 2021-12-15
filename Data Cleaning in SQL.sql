@@ -1,5 +1,5 @@
 												
-												---- DATA CLEANING ----
+								---- DATA CLEANING ----
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -42,16 +42,16 @@ from PortfolioProject.dbo.NashvilleHousing
 order by ParcelID
 
 select a.ParcelID, a.PropertyAddress, b.ParcelID, b.PropertyAddress, isnull(a.PropertyAddress,b.PropertyAddress)
-from PortfolioProject.dbo.NashvilleHousing a	-- tabel diinisialisasi menjadi a dan b
-join PortfolioProject.dbo.NashvilleHousing b	--Join pada satu tabel
+from PortfolioProject.dbo.NashvilleHousing a				-- tabel diinisialisasi menjadi a dan b
+join PortfolioProject.dbo.NashvilleHousing b				--Join pada satu tabel
 	on a.ParcelID = b.ParcelID					--Memiliki ParcelID yang sama
-	and a.[UniqueID ] <> b.[UniqueID ]			--Tapi memiliki UniqueID yang berbeda
+	and a.[UniqueID ] <> b.[UniqueID ]				--Tapi memiliki UniqueID yang berbeda
 where a.PropertyAddress is null
 
 -- isnull(a.PropertyAddress,b.PropertyAddress) ARTINYA jika a.PropertyAddress kosong maka isi dengan b.PropertyAddress
 -- Setelahnya baru dilakukan update
 
-update a								-- a adalah PortfolioProject.dbo.NashvilleHousing kolom PropertyAddress yang akan diupdate
+update a								-- a adalah PortfolioProject.dbo.NashvilleHousing kolom PropertyAddress kosong yang akan diupdate
 set PropertyAddress = isnull(a.PropertyAddress,b.PropertyAddress)
 from PortfolioProject.dbo.NashvilleHousing a
 join PortfolioProject.dbo.NashvilleHousing b
@@ -131,7 +131,7 @@ from PortfolioProject.dbo.NashvilleHousing
 select distinct(SoldAsVacant), COUNT(SoldAsVacant)	-- Mengambil jenis isi kolom SoldAsVacant dan menghitung banyaknya 
 from PortfolioProject.dbo.NashvilleHousing
 group by SoldAsVacant
-order by 2	-- Mengurutkan count dari yang terkecil ke terbesar
+order by 2						-- Mengurutkan count dari yang terkecil ke terbesar
 
 --Mengubah Y dan N menggunakan case statement dan kondisi when
 
@@ -149,7 +149,7 @@ set SoldAsVacant = case when SoldAsVacant = 'Y' then 'Yes'
 	 when SoldAsVacant = 'N' then 'No'
 	 else SoldAsVacant
 	 end
---Lihat lagi (menggunakan distinct seperti di atas) apakah Y dan N isi kolom SoldAsVacant sudah tidak ada
+--Lihat lagi (menggunakan distinct seperti di atas) apakah Y dan N pada kolom SoldAsVacant sudah tidak ada
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -166,7 +166,7 @@ select *,
 					 LegalReference
 					 order by
 						UniqueID
-										) row_num
+							) row_num
 from PortfolioProject.dbo.NashvilleHousing
 order by ParcelID
 
@@ -183,15 +183,15 @@ with RowNumCTE as
 					 LegalReference
 					 order by
 						UniqueID
-										) row_num
+							) row_num
 from PortfolioProject.dbo.NashvilleHousing
 )
-select *					-- Pertama gunakan select * untuk melihat row_num > 1 kemudian gunakan delete jika row_num > 1
---delete					-- kemudian gunakan delete jika row_num > 1
-from RowNumCTE				-- Kemudian gunakan select * lagi untuk melihat row_num > 1 sudah terhapus/tidak ada
+select *			-- Pertama gunakan select * untuk melihat row_num > 1
+--delete			-- kemudian gunakan delete jika ada row_num > 1
+from RowNumCTE			-- Kemudian gunakan select * lagi untuk melihat row_num > 1 sudah terhapus/tidak ada
 where row_num > 1
-order by PropertyAddress	-- gunakan order by untuk melihat row_num > 1 berdasarkan kolom tertentu
-							-- dan hilangkan order by saat delete row_num > 1
+order by PropertyAddress	-- Gunakan order by untuk melihat row_num > 1 berdasarkan kolom tertentu
+				-- Dan hilangkan order by saat delete row_num > 1
 
 
 -- Menghapus Kolom yang Tidak DIbutuhkan
@@ -206,4 +206,4 @@ from PortfolioProject.dbo.NashvilleHousing
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
-									--------------- TERIMA KASIH ---------------
+						--------------- TERIMA KASIH ---------------
