@@ -3,7 +3,7 @@
 
 # In[19]:
 
-
+#IMPORT LIBRARY
 import pandas as pd
 import seaborn as sns
 import numpy as np
@@ -21,7 +21,7 @@ matplotlib.rcParams['figure.figsize'] = (12,8)  #Sesuaikan konfigurasi plot yang
 # In[2]:
 
 
-#Read data
+#READ DATA
 df = pd.read_csv(r'D:\MEILYA THE DATA ANALYST\movies.csv')
 
 
@@ -48,24 +48,20 @@ for col in df.columns:
 
 
 #Mengisi data yang kosong(NaN) pada kolom budget dan gross dengan 0.0
-
 df['budget'] = df['budget'].fillna(0)
 df['gross'] = df['gross'].fillna(0)
 
 
 # In[6]:
-
-
+#Melihat 50 data terbawah
 df.tail(50)
 
 
 # In[30]:
 
 
-#Pecah negara pada released menjadi kolom baru
-
+#Pisahkan tanggal rilis pada kolom released menjadi kolom baru
 df['yearcorrect'] = df['released'].str.split('(', expand=True)
-
 df.head(20)
 
 
@@ -78,7 +74,7 @@ df.dtypes
 
 # In[37]:
 
-
+#Mengurutkan data berdasarkan kolom gross
 df = df.sort_values(by=['gross'], inplace=False, ascending=False)
 
 
@@ -86,13 +82,12 @@ df = df.sort_values(by=['gross'], inplace=False, ascending=False)
 
 
 #Mengubah tipe data gross menjadi int karena pada saat tipe data float nilai gross tidak valid(misal : 12345+6)
-
 df = df.astype({'gross':'int'})
 
 
 # In[15]:
 
-
+#Melihat data
 df
 
 
@@ -128,7 +123,6 @@ plt.show()
 
 
 #Menampilkan data dengan budget terbesar
-
 df.head()
 
 
@@ -151,7 +145,6 @@ df.corr(method='pearson') #Gunakan method (pearson, kendall, spearman )
 
 
 #Korelasi tertinggi antara budget dan gross
-
 correlation_matrix = df.corr(method='pearson')
 sns.heatmap(correlation_matrix, annot=True)
 
@@ -230,7 +223,6 @@ sorted_pairs
 
 
 #Mencari korelasi > 0.5 dengan sorted pairs
-
 high_corr = sorted_pairs[(sorted_pairs) > 0.5]
 high_corr
 
